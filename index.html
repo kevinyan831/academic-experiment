@@ -26,8 +26,6 @@
                         <option value="">Select gender</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
-                        <option value="other">Other</option>
-                        <option value="prefer-not-to-say">Prefer not to say</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -54,5 +52,36 @@
         </div>
     </div>
     <script src="script.js"></script>
+    <script>
+function downloadCSV(data) {
+    console.log('Downloading CSV with data:', data); // Log the data being downloaded
+    const csvContent = 'data:text/csv;charset=utf-8,' + data.map(e => e.join(',')).join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', 'responses.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function handleFormSubmit(event) {
+    event.preventDefault(); // Prevent the default form submission
+    const formData = new FormData(event.target);
+    const data = [];
+    formData.forEach((value, key) => {
+        data.push([key, value]); // Push each response as an array
+    });
+    console.log('Form submitted with data:', data); // Log the form data
+    downloadCSV(data);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form'); // Adjust the selector to target your form
+    if (form) {
+        form.addEventListener('submit', handleFormSubmit);
+    }
+});
+</script>
 </body>
 </html>

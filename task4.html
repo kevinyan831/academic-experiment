@@ -15,9 +15,232 @@
                     allowfullscreen>
             </iframe>
         </div>
+        <div id="food-choice-section" class="hidden">
+            <form id="food-choice-form" class="section">
+                <div class="instructions-text">
+                    <p>Now that you've watched the video, you have a budget of 50 RMB to spend on food items. Please select exactly six items from the following choices that you would like to purchase.</p>
+                    <p>Your total selection must not exceed 50 RMB.</p>
+                </div>
+                
+                <div class="form-group">
+                    <div class="food-item">
+                        <input type="checkbox" id="item1" name="food_choice" value="8">
+                        <label for="item1">Fresh Red Apple - Medium-sized, crisp and sweet Fuji apple</label>
+                    </div>
+                    <div class="food-item">
+                        <input type="checkbox" id="item2" name="food_choice" value="8">
+                        <label for="item2">Chocolate Bar - 100g milk chocolate with 30% cocoa content</label>
+                    </div>
+                    <div class="food-item">
+                        <input type="checkbox" id="item3" name="food_choice" value="8">
+                        <label for="item3">Yogurt Cup - 200ml plain yogurt with 3.5% fat content</label>
+                    </div>
+                    <div class="food-item">
+                        <input type="checkbox" id="item4" name="food_choice" value="8">
+                        <label for="item4">Banana - Single ripe banana, approximately 120g</label>
+                    </div>
+                    <div class="food-item">
+                        <input type="checkbox" id="item5" name="food_choice" value="8">
+                        <label for="item5">Sandwich - Fresh white bread with lettuce, tomato, and cheese</label>
+                    </div>
+                    <div class="food-item">
+                        <input type="checkbox" id="item6" name="food_choice" value="8">
+                        <label for="item6">Mystery Snack Box - A surprise selection of treats</label>
+                    </div>
+                    <div class="food-item">
+                        <input type="checkbox" id="item7" name="food_choice" value="8">
+                        <label for="item7">Chef's Special - Today's unique creation</label>
+                    </div>
+                    <div class="food-item">
+                        <input type="checkbox" id="item8" name="food_choice" value="8">
+                        <label for="item8">Seasonal Fruit Mix - Assorted fruits of the day</label>
+                    </div>
+                    <div class="food-item">
+                        <input type="checkbox" id="item9" name="food_choice" value="8">
+                        <label for="item9">Local Delicacy - Traditional snack variation</label>
+                    </div>
+                    <div class="food-item">
+                        <input type="checkbox" id="item10" name="food_choice" value="8">
+                        <label for="item10">Surprise Drink - Refreshing beverage selection</label>
+                    </div>
+                    <div class="food-item">
+                        <input type="checkbox" id="item11" name="food_choice" value="8">
+                        <label for="item11">Organic Salad - Fresh mixed greens with dressing</label>
+                    </div>
+                    <div class="food-item">
+                        <input type="checkbox" id="item12" name="food_choice" value="8">
+                        <label for="item12">Fruit Smoothie - Blended seasonal fruits</label>
+                    </div>
+                    <div class="food-item">
+                        <input type="checkbox" id="item13" name="food_choice" value="8">
+                        <label for="item13">Energy Bar - Mixed nuts and dried fruits</label>
+                    </div>
+                    <div class="food-item">
+                        <input type="checkbox" id="item14" name="food_choice" value="8">
+                        <label for="item14">Cheese Snack - Assorted cheese cubes</label>
+                    </div>
+                    <div class="food-item">
+                        <input type="checkbox" id="item15" name="food_choice" value="8">
+                        <label for="item15">Vegetable Wrap - Fresh vegetables in tortilla</label>
+                    </div>
+                    <div class="food-item">
+                        <input type="checkbox" id="item16" name="food_choice" value="8">
+                        <label for="item16">Daily Special - Chef's recommendation</label>
+                    </div>
+                    <div class="food-item">
+                        <input type="checkbox" id="item17" name="food_choice" value="8">
+                        <label for="item17">Snack Pack - Mixed sweet and savory treats</label>
+                    </div>
+                    <div class="food-item">
+                        <input type="checkbox" id="item18" name="food_choice" value="8">
+                        <label for="item18">Fresh Juice - Seasonal fruit blend</label>
+                    </div>
+                    <div class="food-item">
+                        <input type="checkbox" id="item19" name="food_choice" value="8">
+                        <label for="item19">Protein Box - Mixed nuts and cheese selection</label>
+                    </div>
+                    <div class="food-item">
+                        <input type="checkbox" id="item20" name="food_choice" value="8">
+                        <label for="item20">Beverage Special - Daily drink selection</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <p id="total-amount">Total Amount: 0 RMB</p>
+                    <p id="selection-count">Items Selected: 0/6</p>
+                    <div id="error-message" class="hidden" style="color: red; margin-top: 10px;"></div>
+                </div>
+
+                <button type="submit" class="btn">Submit Choices</button>
+            </form>
+        </div>
         <div style="margin-top: 20px; text-align: center;">
+            <button id="continue-btn" class="btn">Continue to Food Selection</button>
             <button class="btn" onclick="window.location.href='index.html'">Back to Task Selection</button>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const continueBtn = document.getElementById('continue-btn');
+            const foodChoiceSection = document.getElementById('food-choice-section');
+            const form = document.getElementById('food-choice-form');
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const totalAmount = document.getElementById('total-amount');
+            const selectionCount = document.getElementById('selection-count');
+            const errorMessage = document.getElementById('error-message');
+
+            continueBtn.addEventListener('click', function() {
+                foodChoiceSection.classList.remove('hidden');
+                continueBtn.classList.add('hidden');
+            });
+
+            // Randomize food items order
+            const foodItems = Array.from(document.querySelectorAll('.food-item'));
+            const parent = foodItems[0].parentNode;
+            for (let i = foodItems.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                parent.appendChild(foodItems[j]);
+            }
+
+            function updateTotals() {
+                let total = 0;
+                let count = 0;
+                checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        total += parseInt(checkbox.value);
+                        count++;
+                    }
+                });
+                totalAmount.textContent = `Total Amount: ${total} RMB`;
+                selectionCount.textContent = `Items Selected: ${count}/6`;
+                return { total, count };
+            }
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const { total, count } = updateTotals();
+                    errorMessage.classList.add('hidden');
+
+                    if (count > 6) {
+                        this.checked = false;
+                        updateTotals();
+                        errorMessage.textContent = 'You can only select 6 items.';
+                        errorMessage.classList.remove('hidden');
+                    } else if (total > 50) {
+                        this.checked = false;
+                        updateTotals();
+                        errorMessage.textContent = 'Total amount cannot exceed 50 RMB.';
+                        errorMessage.classList.remove('hidden');
+                    }
+                });
+            });
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const { total, count } = updateTotals();
+
+                if (count !== 6) {
+                    errorMessage.textContent = 'Please select exactly 6 items.';
+                    errorMessage.classList.remove('hidden');
+                    return;
+                }
+
+                if (total > 50) {
+                    errorMessage.textContent = 'Total amount cannot exceed 50 RMB.';
+                    errorMessage.classList.remove('hidden');
+                    return;
+                }
+
+                // Collect the selected items and calculate percentages
+                const selectedItems = [];
+                let ambiguousCount = 0;
+                checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        const itemText = checkbox.nextElementSibling.textContent;
+                        const isAmbiguous = itemText.includes('Mystery') || 
+                                          itemText.includes('Special') || 
+                                          itemText.includes('Assorted') || 
+                                          itemText.includes('Daily') || 
+                                          itemText.includes('Surprise');
+                        if (isAmbiguous) ambiguousCount++;
+                        selectedItems.push({
+                            item: itemText,
+                            price: checkbox.value,
+                            isAmbiguous: isAmbiguous
+                        });
+                    }
+                });
+
+                const ambiguousPercentage = (ambiguousCount / 6) * 100;
+                const clearPercentage = ((6 - ambiguousCount) / 6) * 100;
+
+                // Store the responses
+                const responses = {
+                    taskNumber: 4,
+                    participantName: localStorage.getItem('participant_name'),
+                    participantAge: localStorage.getItem('participant_age'),
+                    participantGender: localStorage.getItem('participant_gender'),
+                    selectedItems: selectedItems,
+                    totalAmount: total,
+                    ambiguousPercentage: ambiguousPercentage.toFixed(2),
+                    clearPercentage: clearPercentage.toFixed(2)
+                };
+
+                // Convert to CSV and download
+                const csvContent = `Task Number,Participant Name,Age,Gender,Selected Items,Total Amount,Ambiguous Choices %,Clear Choices %\n${responses.taskNumber},${responses.participantName},${responses.participantAge},${responses.participantGender},"${JSON.stringify(responses.selectedItems)}",${responses.totalAmount},${responses.ambiguousPercentage},${responses.clearPercentage}`;
+                const blob = new Blob([csvContent], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.setAttribute('href', url);
+                a.setAttribute('download', `task4_responses_${responses.participantName}.csv`);
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+
+                // Redirect back to task selection
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
 </body>
 </html>
