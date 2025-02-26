@@ -53,27 +53,20 @@
     </div>
     <script src="script.js"></script>
     <script>
-function downloadCSV(data) {
-    console.log('Downloading CSV with data:', data); // Log the data being downloaded
-    const csvContent = 'data:text/csv;charset=utf-8,' + data.map(e => e.join(',')).join('\n');
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', 'responses.csv');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
 function handleFormSubmit(event) {
-    event.preventDefault(); // Prevent the default form submission
-    const formData = new FormData(event.target);
-    const data = [];
-    formData.forEach((value, key) => {
-        data.push([key, value]); // Push each response as an array
-    });
-    console.log('Form submitted with data:', data); // Log the form data
-    downloadCSV(data);
+    event.preventDefault();
+    const name = document.getElementById('name').value;
+    const age = document.getElementById('age').value;
+    const gender = document.getElementById('gender').value;
+
+    // Store participant information in localStorage
+    localStorage.setItem('participant_name', name);
+    localStorage.setItem('participant_age', age);
+    localStorage.setItem('participant_gender', gender);
+
+    // Hide participant form and show task selection
+    document.getElementById('participant-form').classList.add('hidden');
+    document.getElementById('task-selection').classList.remove('hidden');
 }
 
 document.addEventListener('DOMContentLoaded', function() {

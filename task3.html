@@ -217,13 +217,13 @@
                 // Store the responses
                 const responses = {
                     taskNumber: 3,
-                    participantName: localStorage.getItem('participant_name'),
-                    participantAge: localStorage.getItem('participant_age'),
-                    participantGender: localStorage.getItem('participant_gender'),
                     selectedItems: selectedItems,
                     totalAmount: total,
                     ambiguousPercentage: ambiguousPercentage.toFixed(2),
-                    clearPercentage: clearPercentage.toFixed(2)
+                    clearPercentage: clearPercentage.toFixed(2),
+                    participantName: localStorage.getItem('participant_name'),
+                    participantAge: localStorage.getItem('participant_age'),
+                    participantGender: localStorage.getItem('participant_gender')
                 };
 
                 // Convert to CSV and download

@@ -236,9 +236,12 @@
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
 
-                // Redirect back to task selection
-                window.location.href = 'index.html';
+                // Redirect back to task selection after ensuring download starts
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 100);
             });
         });
     </script>

@@ -204,18 +204,11 @@
                     selectedItems: selectedItems,
                     totalAmount: total,
                     ambiguousPercentage: ambiguousPercentage.toFixed(2),
-                    clearPercentage: clearPercentage.toFixed(2)
+                    clearPercentage: clearPercentage.toFixed(2),
+                    participantName: localStorage.getItem('participant_name'),
+                    participantAge: localStorage.getItem('participant_age'),
+                    participantGender: localStorage.getItem('participant_gender')
                 };
-
-                // Get participant info from localStorage
-                const participantName = localStorage.getItem('participant_name');
-                const participantAge = localStorage.getItem('participant_age');
-                const participantGender = localStorage.getItem('participant_gender');
-
-                // Add participant info to responses
-                responses.participantName = participantName;
-                responses.participantAge = participantAge;
-                responses.participantGender = participantGender;
 
                 // Convert to CSV and download
                 const csvContent = `Task Number,Participant Name,Age,Gender,Selected Items,Total Amount,Ambiguous Choices %,Clear Choices %\n${responses.taskNumber},${responses.participantName},${responses.participantAge},${responses.participantGender},"${JSON.stringify(responses.selectedItems)}",${responses.totalAmount},${responses.ambiguousPercentage},${responses.clearPercentage}`;
